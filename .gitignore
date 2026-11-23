@@ -1,0 +1,16 @@
+# Carpetas internas de Godot 4
+.godot/
+
+# Compilación y caché de C# / .NET / Visual Studio
+.vs/
+.vscode/
+bin/
+obj/
+*.csproj.old
+*.sln.old
+*.user
+*.suo
+
+# Archivos del sistema operativo Windows
+Thumbs.db
+Desktop.ini
