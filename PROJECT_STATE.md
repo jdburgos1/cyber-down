@@ -1,7 +1,7 @@
 # PROJECT_STATE.md — CyberDown (Nombre tentativo)
 
 ## 1. Identidad y Visión del Juego
-- **Género:** Fútbol americano 2D arcade-táctico (1 jugador vs CPU).
+- **Género:** Fútbol americano 2D arcade-táctico (1 jugador vs CPU), perspectiva vertical (atacando de abajo hacia arriba, estilo Madden clásico).
 - **Estética:** Pixel art retro-futurista / cyberpunk ligero + estilo cómic (armaduras estilizadas, estelas de neón, retratos expresivos y onomatopeyas visuales como "¡CRACK!", "¡TOUCHDOWN!").
 - **Plataformas:** Windows (desarrollo principal) y Android (pruebas en tablet Samsung Galaxy Tab A8, orientación horizontal).
 - **Propiedad Intelectual:** 100% original (equipos, ligas, nombres y escudos ficticios para monetización segura).
@@ -9,24 +9,23 @@
 ## 2. Stack Tecnológico y Arquitectura
 - **Motor:** Godot Engine 4 (.NET) — Renderizador: Compatibility.
 - **Lenguaje:** C# (.NET 8 SDK) — IDE: Visual Studio Community.
-- **Control de Versiones:** Git local (rama `master`) usando Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`).
-- **Arte y Audio (fases futuras):** LibreSprite y Audacity / ChipTone.
-- **Estructura de Carpetas:**
-  - `res://src/` -> Scripts C# (`CyberDown.*`).
-  - `res://scenes/` -> Escenas `.tscn`.
-  - `res://assets/` -> Sprites, fuentes y audio.
-  - `res://data/` -> Configuraciones JSON / Resources.
+- **Control de Versiones:** Git + GitHub (rama `master`) usando Conventional Commits.
+- **Estructura de Carpetas:** `res://src/`, `res://scenes/`, `res://assets/`, `res://data/`.
 
 ## 3. Estado Actual (Completado)
-- [x] Entorno configurado (Godot 4 .NET, Visual Studio Community, Git local, `.gitignore`).
-- [x] Resolución configurada a `1280x720` con Stretch Mode `canvas_items` y Aspect `expand`.
-- [x] Input Map configurado (`move_up`, `move_down`, `move_left`, `move_right` con WASD/Flechas).
-- [x] Escena `res://scenes/MatchField.tscn` con fondo temporal y nodo `Quarterback` (`CharacterBody2D`).
-- [x] Script `res://src/QuarterbackController.cs` con movimiento vectorial (aceleración e inercia).
+- [x] **Módulo 1 (Entorno y QB):** Ventana `1280x720` (`canvas_items`, `expand`), Input Map (`move_up/down/left/right`), `Quarterback` (`CharacterBody2D`) con visual centrado (`-14, -14`) y movimiento vectorial (`QuarterbackController.cs`).
+- [x] **Módulo 2 (Cancha Vertical, Cámara y Balón):** Cancha `1280x2600` (`Mouse Filter = Ignore`), `Camera2D` con `Zoom = (0.8, 0.8)`, `Position Smoothing = 5.0` y `Offset.Y = -120`; escena `Football.tscn` (`Z Index = 10`) y `Football.cs` con parábola virtual (`CurrentHeightZ`), sombra y margen de aterrizaje (`0.1s`).
+- [x] **Módulo 3 (Receptor y Rutas Ofensivas):** Escena `WideReceiver.tscn` (`CharacterBody2D` + `Area2D` `CatchZone` radio `32`) y `WideReceiverController.cs` (`RunSpeed = 175`, `MaxCatchHeight = 55`) con navegación por `RouteWaypoints` y detección de atrapada por señal `AreaEntered`.
 
-## 4. Reglas de Mentoría
-- Explicar el porqué técnico de cada nodo de Godot y de las líneas clave de C# (rol de profesor/mentor).
-- No quemar (hardcodear) el nombre del juego en múltiples scripts para facilitar cambios futuros.
+## 4. Plan de Módulos (Roadmap)
+- [x] M1: Entorno y QB | [x] M2: Cancha, Cámara y Balón | [x] M3: Receptor y Rutas
+- [ ] M4: Máquina de Estados de Jugada (Pre-Snap, Snap, cambio de control al receptor con balón)
+- [ ] M5: Defensa básica (IA persecución, cobertura y tacleadas)
+- [ ] M6: Motor de reglas deportivas puro en C# (Downs, yardas, Touchdown, reloj, pruebas unitarias)
+- [ ] M7: Equipos especiales (Kickoff, despeje, gol de campo)
+- [ ] M8: HUD deportivo, tarjetas cómic y controles táctiles para Samsung Tab A8
+- [ ] M9: Prueba temprana de exportación Android (`.apk`)
+- [ ] M10: Arte final en LibreSprite (armaduras neón, onomatopeyas) y audio en ChipTone/Audacity
 
 ## 5. Próximo Paso Inmediato
-- **Módulo 2:** Añadir `Camera2D` con seguimiento suave (`Smoothing`) al Quarterback, ampliar la cancha para que tenga largo real de juego y programar la escena del balón (`Football.tscn`) con trayectoria parabólica (eje Z virtual de altura + sombra en el césped).
+- **Módulo 4:** Implementar un controlador central de jugada (`PlayManager.cs` con Máquina de Estados: `PreSnap`, `InPlay`, `PlayDead`) para que los jugadores esperen en la línea hasta presionar `Espacio` (Snap), y transferir el control de movimiento del jugador y la cámara al Receptor cuando atrape el balón.

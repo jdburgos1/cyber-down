@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dvdg4c2ibnvxc" path="res://src/QuarterbackController.cs" id="1_yvf72"]
 [ext_resource type="PackedScene" uid="uid://clytj5rh7s0qo" path="res://scenes/Football.tscn" id="2_jtwsp"]
+[ext_resource type="PackedScene" uid="uid://bxbb4bhx2regp" path="res://scenes/WideReceiver.tscn" id="3_52mji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45su5"]
 
@@ -28,13 +29,19 @@ offset_bottom = 14.0
 color = Color(0, 0.9411765, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Quarterback" unique_id=93607533]
-position = Vector2(183, 197)
+position = Vector2(174, 188)
 shape = SubResource("RectangleShape2D_45su5")
 
 [node name="Camera2D" type="Camera2D" parent="Quarterback" unique_id=1219648917]
-offset = Vector2(0, 180)
+offset = Vector2(0, -120)
+zoom = Vector2(0.8, 0.8)
 limit_left = 0
 limit_top = 0
 limit_right = 1280
 limit_bottom = 2650
 position_smoothing_enabled = true
+
+[node name="WideReceiver" parent="." unique_id=821040302 instance=ExtResource("3_52mji")]
+position = Vector2(326, 2431)
+RunSpeed = 175.0
+MaxCatchHeight = 55.0

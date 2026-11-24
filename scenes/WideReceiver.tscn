@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bxbb4bhx2regp"]
+
+[ext_resource type="Script" uid="uid://6sh7liv68ru1" path="res://src/WideReceiverController.cs" id="1_78j71"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_45su5"]
+size = Vector2(26, 26)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_45su5"]
+radius = 32.0
+
+[node name="WideReceiver" type="CharacterBody2D" unique_id=821040302]
+script = ExtResource("1_78j71")
+RunSpeed = 175.0
+MaxCatchHeight = 55.0
+
+[node name="VisualPlaceholder" type="ColorRect" parent="." unique_id=1263252922]
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 13.0
+offset_bottom = 13.0
+color = Color(1, 0.9019608, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=410419723]
+shape = SubResource("RectangleShape2D_45su5")
+
+[node name="CatchZone" type="Area2D" parent="." unique_id=1218897719]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchZone" unique_id=2072666391]
+shape = SubResource("CircleShape2D_45su5")
