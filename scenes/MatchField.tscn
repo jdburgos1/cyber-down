@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ddbd0uf8t8ph2"]
 
 [ext_resource type="Script" uid="uid://dvdg4c2ibnvxc" path="res://src/QuarterbackController.cs" id="1_yvf72"]
+[ext_resource type="PackedScene" uid="uid://clytj5rh7s0qo" path="res://scenes/Football.tscn" id="2_jtwsp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45su5"]
 
@@ -10,19 +11,30 @@
 offset_left = 2.0
 offset_top = 5.0
 offset_right = 1282.0
-offset_bottom = 725.0
+offset_bottom = 2605.0
+mouse_filter = 2
 color = Color(0.078431375, 0.23921569, 0.16078432, 1)
 
 [node name="Quarterback" type="CharacterBody2D" parent="." unique_id=1044240846]
+position = Vector2(640, 2100)
 script = ExtResource("1_yvf72")
+FootballScene = ExtResource("2_jtwsp")
 
 [node name="VisualPlaceholder" type="ColorRect" parent="Quarterback" unique_id=1024322259]
-offset_left = 400.0
-offset_top = 360.0
-offset_right = 428.0
-offset_bottom = 388.0
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
 color = Color(0, 0.9411765, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Quarterback" unique_id=93607533]
 position = Vector2(183, 197)
 shape = SubResource("RectangleShape2D_45su5")
+
+[node name="Camera2D" type="Camera2D" parent="Quarterback" unique_id=1219648917]
+offset = Vector2(0, 180)
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 2650
+position_smoothing_enabled = true

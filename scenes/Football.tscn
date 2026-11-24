@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://clytj5rh7s0qo"]
+
+[ext_resource type="Script" uid="uid://cudme3ke44qmn" path="res://src/Football.cs" id="1_isftf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_45su5"]
+
+[node name="Football" type="Area2D" unique_id=467982062]
+z_index = 10
+script = ExtResource("1_isftf")
+
+[node name="Shadow" type="ColorRect" parent="." unique_id=1852738473]
+offset_left = -8.0
+offset_top = -5.0
+offset_right = 8.0
+offset_bottom = 5.0
+color = Color(0, 0, 0, 0.5647059)
+
+[node name="BallVisual" type="ColorRect" parent="." unique_id=347162886]
+offset_left = -8.0
+offset_top = -5.0
+offset_right = 8.0
+offset_bottom = 5.0
+color = Color(1, 0.48235294, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1292604295]
+shape = SubResource("CircleShape2D_45su5")
