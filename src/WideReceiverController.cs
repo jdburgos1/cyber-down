@@ -5,8 +5,9 @@ namespace CyberDown.Players
 {
     public partial class WideReceiverController : CharacterBody2D
     {
-        [Export] public float RunSpeed { get; set; } = 240.0f;
-        [Export] public float MaxCatchHeight { get; set; } = 38.0f;
+        [Export] public float RunSpeed { get; set; } = 175.0f;
+        [Export] public float BallCarrierSpeed { get; set; } = 250.0f; // Corre más rápido tras atrapar
+        [Export] public float MaxCatchHeight { get; set; } = 55.0f;
 
         // Puntos relativos a donde inicia el jugador (X = derecha/izquierda, Y negativo = hacia arriba)
         [Export]
@@ -34,7 +35,31 @@ namespace CyberDown.Players
 
         public override void _PhysicsProcess(double delta)
         {
-            // Si aún quedan puntos en la ruta por recorrer, corremos hacia el siguiente punto
+            if (PlayManager.Instance == null) return;
+
+            PlayState state = PlayManager.Instance.CurrentState;
+
+            // 1. Antes del Snap: quieto en posición
+            if (state == PlayState.PreSnap)
+            {
+                Velocity = Vector2.Zero;
+                return;
+            }
+
+            // 2. Jugada en marcha (sin balón): corre la ruta automática
+            if (state == PlayState.InPlay && !_hasBall)
+            {
+                RunRoute();
+            }
+            // 3. Ya atrapó el balón: el jugador toma el control con WASD/Flechas
+            else if (state == PlayState.BallCaught && _hasBall)
+            {
+                ControlBallCarrier();
+            }
+        }
+
+        private void RunRoute()
+        {
             if (_currentWaypointIndex < RouteWaypoints.Length)
             {
                 Vector2 targetPoint = _startPosition + RouteWaypoints[_currentWaypointIndex];
@@ -43,7 +68,6 @@ namespace CyberDown.Players
                 Velocity = direction * RunSpeed;
                 MoveAndSlide();
 
-                // Si ya estamos a menos de 10 píxeles del punto actual, pasamos al siguiente corte de la ruta
                 if (GlobalPosition.DistanceTo(targetPoint) < 10.0f)
                 {
                     _currentWaypointIndex++;
@@ -51,9 +75,15 @@ namespace CyberDown.Players
             }
             else
             {
-                // Al terminar la ruta, frena suavemente
                 Velocity = Vector2.Zero;
             }
+        }
+
+        private void ControlBallCarrier()
+        {
+            Vector2 inputDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+            Velocity = inputDirection * BallCarrierSpeed;
+            MoveAndSlide();
         }
 
         private void OnBallEntered(Area2D area)
@@ -70,6 +100,9 @@ namespace CyberDown.Players
                 // Cambiamos el color del receptor a verde brillante como feedback visual de "¡ATRAPADA!"
                 _visual.Color = new Color("#00ff66");
                 GD.Print("¡PASE COMPLETO! El receptor atrapó el balón.");
+
+                // Avisamos al PlayManager para que transfiera la cámara y el control
+                PlayManager.Instance?.OnPassCompleted(this);
             }
         }
     }

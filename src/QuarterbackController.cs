@@ -12,8 +12,19 @@ namespace CyberDown.Players
         // Arrastraremos aquí la escena Football.tscn desde el Inspector
         [Export] public PackedScene FootballScene { get; set; }
 
+        private bool _hasThrown = false;
+
         public override void _PhysicsProcess(double delta)
         {
+
+            // Solo permitimos mover al QB cuando la jugada está en curso y aún no ha lanzado
+            if (PlayManager.Instance == null || PlayManager.Instance.CurrentState != PlayState.InPlay || _hasThrown)
+            {
+                Velocity = Velocity.MoveToward(Vector2.Zero, Friction * (float)delta);
+                MoveAndSlide();
+                return;
+            }
+
             float dt = (float)delta;
             Vector2 inputDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
             Vector2 targetVelocity = inputDirection * MaxSpeed;
@@ -29,6 +40,11 @@ namespace CyberDown.Players
         // _UnhandledInput detecta clics o teclas que no fueron capturados por botones de interfaz
         public override void _Input(InputEvent @event)
         {
+
+            // Solo puede lanzar si estamos en InPlay y no ha lanzado ya
+            if (PlayManager.Instance == null || PlayManager.Instance.CurrentState != PlayState.InPlay || _hasThrown)
+                return;
+
             if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
             {
                 ThrowBall(GetGlobalMousePosition());
@@ -37,11 +53,9 @@ namespace CyberDown.Players
 
         private void ThrowBall(Vector2 targetPosition)
         {
-            if (FootballScene == null)
-            {
-                GD.PrintErr("¡Falta asignar FootballScene en el Inspector del Quarterback!");
-                return;
-            }
+            if (FootballScene == null) return;
+
+            _hasThrown = true; // Evita lanzar múltiples balones en la misma jugada
 
             // Instanciamos una copia del balón y la añadimos a la escena principal (GetParent())
             Football ball = FootballScene.Instantiate<Football>();
