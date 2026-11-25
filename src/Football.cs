@@ -51,6 +51,7 @@ namespace CyberDown.Gameplay
                 {
                     IsInAir = false;
                     GD.Print("¡Pase incompleto! El balón tocó el césped.");
+                    PlayManager.Instance?.EndPlay("Pase incompleto");
                     QueueFree();
                 }
                 return;

@@ -40,7 +40,7 @@ namespace CyberDown.Players
             PlayState state = PlayManager.Instance.CurrentState;
 
             // 1. Antes del Snap: quieto en posición
-            if (state == PlayState.PreSnap)
+            if (state == PlayState.PreSnap || state == PlayState.PlayDead)
             {
                 Velocity = Vector2.Zero;
                 return;
@@ -104,6 +104,15 @@ namespace CyberDown.Players
                 // Avisamos al PlayManager para que transfiera la cámara y el control
                 PlayManager.Instance?.OnPassCompleted(this);
             }
+        }
+
+        public void ResetPlayer()
+        {
+            _hasBall = false;
+            _currentWaypointIndex = 0;
+            Velocity = Vector2.Zero;
+            if (_visual != null)
+                _visual.Color = new Color("#ffe600");
         }
     }
 }

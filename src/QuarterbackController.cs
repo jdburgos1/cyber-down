@@ -62,5 +62,11 @@ namespace CyberDown.Players
             GetParent().AddChild(ball);
             ball.Launch(GlobalPosition, targetPosition);
         }
+
+        public void ResetPlayer()
+        {
+            _hasThrown = false;
+            Velocity = Vector2.Zero;
+        }
     }
 }

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://i8l6pm706em6"]
+
+[ext_resource type="Script" uid="uid://c772nmsrr8c05" path="res://src/DefenderController.cs" id="1_r2g7j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_45su5"]
+size = Vector2(26, 26)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_45su5"]
+radius = 24.0
+
+[node name="Defender" type="CharacterBody2D" unique_id=1167549161]
+script = ExtResource("1_r2g7j")
+
+[node name="VisualPlaceholder" type="ColorRect" parent="." unique_id=2133658570]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(1, 0.16470589, 0.33333334, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=556169462]
+shape = SubResource("RectangleShape2D_45su5")
+
+[node name="TackleZone" type="Area2D" parent="." unique_id=1790949006]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TackleZone" unique_id=622557150]
+shape = SubResource("CircleShape2D_45su5")

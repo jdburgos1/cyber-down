@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://clytj5rh7s0qo" path="res://scenes/Football.tscn" id="2_jtwsp"]
 [ext_resource type="PackedScene" uid="uid://bxbb4bhx2regp" path="res://scenes/WideReceiver.tscn" id="3_52mji"]
 [ext_resource type="Script" uid="uid://cjr48pqgxlwtu" path="res://src/PlayManager.cs" id="4_duu2g"]
+[ext_resource type="PackedScene" uid="uid://i8l6pm706em6" path="res://scenes/Defender.tscn" id="5_jv5fc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45su5"]
 
@@ -36,10 +37,11 @@ shape = SubResource("RectangleShape2D_45su5")
 [node name="WideReceiver" parent="." unique_id=821040302 instance=ExtResource("3_52mji")]
 position = Vector2(326, 2316)
 
-[node name="PlayManager" type="Node" parent="." unique_id=926178547 node_paths=PackedStringArray("QuarterbackNode", "ReceiverNode", "MainCamera")]
+[node name="PlayManager" type="Node" parent="." unique_id=926178547 node_paths=PackedStringArray("QuarterbackNode", "ReceiverNode", "DefenderNode", "MainCamera")]
 script = ExtResource("4_duu2g")
 QuarterbackNode = NodePath("../Quarterback")
 ReceiverNode = NodePath("../WideReceiver")
+DefenderNode = NodePath("../Defender")
 MainCamera = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1219648917]
@@ -50,3 +52,7 @@ limit_top = 0
 limit_right = 1280
 limit_bottom = 2650
 position_smoothing_enabled = true
+
+[node name="Defender" parent="." unique_id=1167549161 node_paths=PackedStringArray("TargetReceiver") instance=ExtResource("5_jv5fc")]
+position = Vector2(897, 1826)
+TargetReceiver = NodePath("../WideReceiver")
