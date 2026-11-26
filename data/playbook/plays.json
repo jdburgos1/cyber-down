@@ -1,0 +1,79 @@
+[
+  {
+    "Id": "cyber_slant",
+    "Name": "1. Cyber Slants (Pase Rápido)",
+    "Receivers": [
+      {
+        "StartOffset": { "X": -340, "Y": 0 },
+        "Waypoints": [
+          { "X": 0, "Y": -100 },
+          { "X": 180, "Y": -260 }
+        ]
+      },
+      {
+        "StartOffset": { "X": -150, "Y": 15 },
+        "Waypoints": [
+          { "X": 0, "Y": -80 },
+          { "X": 160, "Y": -200 }
+        ]
+      },
+      {
+        "StartOffset": { "X": 340, "Y": 0 },
+        "Waypoints": [
+          { "X": 0, "Y": -100 },
+          { "X": -180, "Y": -260 }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "neon_post",
+    "Name": "2. Neon Four Verticals (Profundo)",
+    "Receivers": [
+      {
+        "StartOffset": { "X": -380, "Y": 0 },
+        "Waypoints": [
+          { "X": 0, "Y": -420 }
+        ]
+      },
+      {
+        "StartOffset": { "X": 140, "Y": 15 },
+        "Waypoints": [
+          { "X": 0, "Y": -220 },
+          { "X": -140, "Y": -400 }
+        ]
+      },
+      {
+        "StartOffset": { "X": 380, "Y": 0 },
+        "Waypoints": [
+          { "X": 0, "Y": -420 }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "volt_flood",
+    "Name": "3. Volt Flood Right (Sobrecarga Derecha)",
+    "Receivers": [
+      {
+        "StartOffset": { "X": -320, "Y": 0 },
+        "Waypoints": [
+          { "X": 0, "Y": -180 },
+          { "X": 240, "Y": -220 }
+        ]
+      },
+      {
+        "StartOffset": { "X": 120, "Y": 15 },
+        "Waypoints": [
+          { "X": 160, "Y": -60 }
+        ]
+      },
+      {
+        "StartOffset": { "X": 340, "Y": 0 },
+        "Waypoints": [
+          { "X": 0, "Y": -340 }
+        ]
+      }
+    ]
+  }
+]

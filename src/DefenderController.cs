@@ -57,13 +57,16 @@ namespace CyberDown.Players
             // 2. Si el receptor atrapó el balón (BallCaught), lo persigue y taclea
             else if (state == PlayState.BallCaught)
             {
-                if (_tackleZone.OverlapsBody(TargetReceiver))
+                Node2D carrier = PlayManager.Instance.ActiveBallCarrier;
+                if (carrier == null) return;
+
+                if (_tackleZone.OverlapsBody(carrier))
                 {
                     PlayManager.Instance.EndPlay("¡CRACK! Tacleada completada.");
                     return;
                 }
 
-                MoveTowardsPoint(TargetReceiver.GlobalPosition, PursuitSpeed);
+                MoveTowardsPoint(carrier.GlobalPosition, PursuitSpeed);
             }
         }
 
@@ -83,15 +86,13 @@ namespace CyberDown.Players
         private void OnBodyEnteredTackleZone(Node2D body)
         {
             if (PlayManager.Instance == null) return;
-
             PlayState state = PlayManager.Instance.CurrentState;
 
-            // Tacleada al Receptor cuando tiene el balón
-            if (state == PlayState.BallCaught && body == TargetReceiver)
+            // Solo taclea si el cuerpo que tocó es exactamente el portador activo del balón
+            if (state == PlayState.BallCaught && body == PlayManager.Instance.ActiveBallCarrier)
             {
                 PlayManager.Instance.EndPlay("¡CRACK! Tacleada completada.");
             }
-            // Tacleada / Sack al Quarterback si sigue con el balón en InPlay
             else if (state == PlayState.InPlay && body == QuarterbackNode)
             {
                 PlayManager.Instance.EndPlay("¡SACK! Quarterback tacleado.");

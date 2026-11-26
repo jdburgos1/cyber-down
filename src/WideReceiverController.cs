@@ -22,6 +22,7 @@ namespace CyberDown.Players
         private bool _hasBall = false;
         private Area2D _catchZone;
         private ColorRect _visual;
+        public bool HasBall => _hasBall;
 
         public override void _Ready()
         {
@@ -56,6 +57,12 @@ namespace CyberDown.Players
             {
                 ControlBallCarrier();
             }
+        }
+
+        public void AssignRoute(Vector2[] newWaypoints)
+        {
+            RouteWaypoints = newWaypoints;
+            _currentWaypointIndex = 0;
         }
 
         private void RunRoute()
@@ -96,7 +103,7 @@ namespace CyberDown.Players
         private void OnBallEntered(Area2D area)
         {
             // Verificamos si el área que entró es nuestro Football y si no tenemos ya el balón
-            if (_hasBall || area is not Football ball) return;
+            if (_hasBall || area is not Football ball || ball.IsKick) return;
 
             // Solo atrapa el balón si está en el aire Y a una altura alcanzable por las manos
             if (ball.IsInAir && ball.CurrentHeightZ <= MaxCatchHeight)

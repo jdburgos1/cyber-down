@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 namespace CyberDown.Gameplay
 {
@@ -9,6 +10,7 @@ namespace CyberDown.Gameplay
 
         public float CurrentHeightZ { get; private set; } = 0.0f;
         public bool IsInAir { get; private set; } = false;
+        public bool IsKick { get; set; } = false;
 
         private Vector2 _startPos;
         private Vector2 _targetPos;
@@ -18,19 +20,22 @@ namespace CyberDown.Gameplay
         private bool _landed = false;
         private Control _ballVisual;
 
+        public event Action<Vector2> OnBallLanded;
+
         public override void _Ready()
         {
             _ballVisual = GetNode<Control>("BallVisual");
         }
 
-        public void Launch(Vector2 from, Vector2 to)
+        public void Launch(Vector2 from, Vector2 to, float customSpeed = 600.0f, float customArcHeight = 85.0f)
         {
             _startPos = from;
             _targetPos = to;
             GlobalPosition = _startPos;
 
+            MaxArcHeight = customArcHeight;
             float distance = _startPos.DistanceTo(_targetPos);
-            _flightDuration = Mathf.Max(distance / FlightSpeed, 0.1f);
+            _flightDuration = Mathf.Max(distance / customSpeed, 0.1f);
             _elapsedTime = 0.0f;
             _groundGraceTimer = 0.0f;
             _landed = false;
@@ -50,8 +55,17 @@ namespace CyberDown.Gameplay
                 if (_groundGraceTimer >= 0.1f)
                 {
                     IsInAir = false;
-                    GD.Print("¡Pase incompleto! El balón tocó el césped.");
-                    PlayManager.Instance?.EndPlay("Pase incompleto", isIncomplete: true);
+
+                    if (IsKick)
+                    {
+                        OnBallLanded?.Invoke(GlobalPosition);
+                    }
+                    else
+                    {
+                        PlayManager.Instance?.EndPlay("Pase incompleto", isIncomplete: true);
+                    }
+
+                    GD.Print("El balón tocó el césped.");
                     QueueFree();
                 }
                 return;

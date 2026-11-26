@@ -20,6 +20,7 @@ color = Color(1, 0.16470589, 0.33333334, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=556169462]
 shape = SubResource("RectangleShape2D_45su5")
+disabled = true
 
 [node name="TackleZone" type="Area2D" parent="." unique_id=1790949006]
 

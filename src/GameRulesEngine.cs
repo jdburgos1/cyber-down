@@ -156,12 +156,39 @@ namespace CyberDown.Rules
             _ => $"{down}th"
         };
 
+
         private string FormatDistance()
         {
             if (FirstDownLineY <= OpponentEndZoneY)
                 return "Goal";
 
             return GetYardsToGo().ToString();
+        }
+
+
+        public PlayResult ResolveFieldGoal(bool isGood)
+        {
+            if (isGood)
+            {
+                HomeScore += 3;
+                ResetDrive(1800.0f);
+                return new PlayResult
+                {
+                    Outcome = PlayOutcomeType.Touchdown, // Reutilizamos el flujo de anotación
+                    YardsDelta = 0,
+                    Message = $"¡FIELD GOAL BUENO! (+3 pts) | Marcador: {HomeScore} - {AwayScore}"
+                };
+            }
+            else
+            {
+                ResetDrive(1800.0f);
+                return new PlayResult
+                {
+                    Outcome = PlayOutcomeType.TurnoverOnDowns,
+                    YardsDelta = 0,
+                    Message = "¡FIELD GOAL FALLADO! Cambio de posesión."
+                };
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bxbb4bhx2regp" path="res://scenes/WideReceiver.tscn" id="3_52mji"]
 [ext_resource type="Script" uid="uid://cjr48pqgxlwtu" path="res://src/PlayManager.cs" id="4_duu2g"]
 [ext_resource type="PackedScene" uid="uid://i8l6pm706em6" path="res://scenes/Defender.tscn" id="5_jv5fc"]
+[ext_resource type="Script" uid="uid://d31dhtyv7tx4i" path="res://src/SpecialTeamsController.cs" id="6_yyyb1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45su5"]
 
@@ -39,6 +40,14 @@ offset_bottom = 1806.0
 mouse_filter = 2
 color = Color(1, 0.84313726, 0, 1)
 
+[node name="FieldGoalPosts" type="ColorRect" parent="." unique_id=169448884]
+offset_left = 560.0
+offset_top = 120.0
+offset_right = 720.0
+offset_bottom = 130.0
+mouse_filter = 2
+color = Color(1, 0.84313726, 0, 1)
+
 [node name="Quarterback" type="CharacterBody2D" parent="." unique_id=1044240846]
 position = Vector2(640, 2100)
 script = ExtResource("1_yvf72")
@@ -55,22 +64,36 @@ color = Color(0, 0.9411765, 1, 1)
 position = Vector2(174, 188)
 shape = SubResource("RectangleShape2D_45su5")
 
-[node name="WideReceiver" parent="." unique_id=821040302 instance=ExtResource("3_52mji")]
+[node name="WideReceiver1" parent="." unique_id=821040302 instance=ExtResource("3_52mji")]
 position = Vector2(176, 2324)
 
-[node name="Defender" parent="." unique_id=1167549161 node_paths=PackedStringArray("TargetReceiver", "QuarterbackNode") instance=ExtResource("5_jv5fc")]
-position = Vector2(1204, 1645)
-TargetReceiver = NodePath("../WideReceiver")
-QuarterbackNode = NodePath("../Quarterback")
+[node name="WideReceiver2" parent="." unique_id=1959778839 instance=ExtResource("3_52mji")]
+position = Vector2(176, 2324)
 
-[node name="PlayManager" type="Node" parent="." unique_id=926178547 node_paths=PackedStringArray("QuarterbackNode", "ReceiverNode", "DefenderNode", "MainCamera", "LineOfScrimmageVisual", "FirstDownLineVisual")]
+[node name="WideReceiver3" parent="." unique_id=1066267123 instance=ExtResource("3_52mji")]
+position = Vector2(176, 2324)
+
+[node name="Defender1" parent="." unique_id=1167549161 node_paths=PackedStringArray("TargetReceiver") instance=ExtResource("5_jv5fc")]
+position = Vector2(1204, 1645)
+TargetReceiver = NodePath("../WideReceiver1")
+
+[node name="Defender2" parent="." unique_id=1233633971 node_paths=PackedStringArray("TargetReceiver") instance=ExtResource("5_jv5fc")]
+position = Vector2(1204, 1645)
+TargetReceiver = NodePath("../WideReceiver2")
+
+[node name="Defender3" parent="." unique_id=2016971964 node_paths=PackedStringArray("TargetReceiver") instance=ExtResource("5_jv5fc")]
+position = Vector2(1204, 1645)
+TargetReceiver = NodePath("../WideReceiver3")
+
+[node name="PlayManager" type="Node" parent="." unique_id=926178547 node_paths=PackedStringArray("QuarterbackNode", "Receivers", "Defenders", "MainCamera", "LineOfScrimmageVisual", "FirstDownLineVisual", "SpecialTeams")]
 script = ExtResource("4_duu2g")
 QuarterbackNode = NodePath("../Quarterback")
-ReceiverNode = NodePath("../WideReceiver")
-DefenderNode = NodePath("../Defender")
+Receivers = [NodePath("../WideReceiver1"), NodePath("../WideReceiver2"), NodePath("../WideReceiver3")]
+Defenders = [NodePath("../Defender1"), NodePath("../Defender2"), NodePath("../Defender3")]
 MainCamera = NodePath("../Camera2D")
 LineOfScrimmageVisual = NodePath("../LineOfScrimmage")
 FirstDownLineVisual = NodePath("../FirstDownLine")
+SpecialTeams = NodePath("../SpecialTeams")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1219648917]
 offset = Vector2(0, -120)
@@ -80,3 +103,7 @@ limit_top = 0
 limit_right = 1280
 limit_bottom = 2650
 position_smoothing_enabled = true
+
+[node name="SpecialTeams" type="Node2D" parent="." unique_id=1357061279]
+script = ExtResource("6_yyyb1")
+FootballScene = ExtResource("2_jtwsp")
