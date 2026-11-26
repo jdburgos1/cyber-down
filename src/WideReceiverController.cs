@@ -13,8 +13,8 @@ namespace CyberDown.Players
         [Export]
         public Vector2[] RouteWaypoints { get; set; } = new Vector2[]
         {
-            new Vector2(0, -220),    // 1. Corre recto hacia arriba 220px
-            new Vector2(160, -380)   // 2. Corta en diagonal hacia la derecha (ruta Post)
+            new Vector2(0, -320),    // 1. Corre recto hacia arriba 220px
+            new Vector2(-160, -480)   // 2. Corta en diagonal hacia la derecha (ruta Post)
         };
 
         private Vector2 _startPosition;
@@ -62,7 +62,14 @@ namespace CyberDown.Players
         {
             if (_currentWaypointIndex < RouteWaypoints.Length)
             {
-                Vector2 targetPoint = _startPosition + RouteWaypoints[_currentWaypointIndex];
+                Vector2 rawTarget = _startPosition + RouteWaypoints[_currentWaypointIndex];
+
+                // Limitamos el destino para que la ruta nunca saque al receptor de los límites del campo
+                Vector2 targetPoint = new Vector2(
+                    Mathf.Clamp(rawTarget.X, 14.0f, 1266.0f),
+                    Mathf.Max(rawTarget.Y, 30.0f)
+                );
+
                 Vector2 direction = GlobalPosition.DirectionTo(targetPoint);
 
                 Velocity = direction * RunSpeed;
@@ -108,6 +115,7 @@ namespace CyberDown.Players
 
         public void ResetPlayer()
         {
+            _startPosition = GlobalPosition;
             _hasBall = false;
             _currentWaypointIndex = 0;
             Velocity = Vector2.Zero;

@@ -18,6 +18,27 @@ offset_bottom = 2605.0
 mouse_filter = 2
 color = Color(0.078431375, 0.23921569, 0.16078432, 1)
 
+[node name="LineOfScrimmage" type="ColorRect" parent="." unique_id=791973363]
+offset_top = 2000.0
+offset_right = 1280.0
+offset_bottom = 2006.0
+mouse_filter = 2
+color = Color(0, 0.7490196, 1, 1)
+
+[node name="EndZoneLine" type="ColorRect" parent="." unique_id=2035977312]
+offset_top = 200.0
+offset_right = 1280.0
+offset_bottom = 212.0
+mouse_filter = 2
+color = Color(0, 1, 0.4, 1)
+
+[node name="FirstDownLine" type="ColorRect" parent="." unique_id=1692109058]
+offset_top = 1800.0
+offset_right = 1280.0
+offset_bottom = 1806.0
+mouse_filter = 2
+color = Color(1, 0.84313726, 0, 1)
+
 [node name="Quarterback" type="CharacterBody2D" parent="." unique_id=1044240846]
 position = Vector2(640, 2100)
 script = ExtResource("1_yvf72")
@@ -35,14 +56,21 @@ position = Vector2(174, 188)
 shape = SubResource("RectangleShape2D_45su5")
 
 [node name="WideReceiver" parent="." unique_id=821040302 instance=ExtResource("3_52mji")]
-position = Vector2(326, 2316)
+position = Vector2(176, 2324)
 
-[node name="PlayManager" type="Node" parent="." unique_id=926178547 node_paths=PackedStringArray("QuarterbackNode", "ReceiverNode", "DefenderNode", "MainCamera")]
+[node name="Defender" parent="." unique_id=1167549161 node_paths=PackedStringArray("TargetReceiver", "QuarterbackNode") instance=ExtResource("5_jv5fc")]
+position = Vector2(1204, 1645)
+TargetReceiver = NodePath("../WideReceiver")
+QuarterbackNode = NodePath("../Quarterback")
+
+[node name="PlayManager" type="Node" parent="." unique_id=926178547 node_paths=PackedStringArray("QuarterbackNode", "ReceiverNode", "DefenderNode", "MainCamera", "LineOfScrimmageVisual", "FirstDownLineVisual")]
 script = ExtResource("4_duu2g")
 QuarterbackNode = NodePath("../Quarterback")
 ReceiverNode = NodePath("../WideReceiver")
 DefenderNode = NodePath("../Defender")
 MainCamera = NodePath("../Camera2D")
+LineOfScrimmageVisual = NodePath("../LineOfScrimmage")
+FirstDownLineVisual = NodePath("../FirstDownLine")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1219648917]
 offset = Vector2(0, -120)
@@ -52,7 +80,3 @@ limit_top = 0
 limit_right = 1280
 limit_bottom = 2650
 position_smoothing_enabled = true
-
-[node name="Defender" parent="." unique_id=1167549161 node_paths=PackedStringArray("TargetReceiver") instance=ExtResource("5_jv5fc")]
-position = Vector2(897, 1826)
-TargetReceiver = NodePath("../WideReceiver")

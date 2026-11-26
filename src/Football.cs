@@ -45,13 +45,13 @@ namespace CyberDown.Gameplay
 
             if (_landed)
             {
-                // Damos 0.1 segundos extra en el suelo para que el Area2D del receptor alcance a detectar el balón
+                // 0.1 segundos extra en el suelo para que el Area2D del receptor alcance a detectar el balón
                 _groundGraceTimer += dt;
                 if (_groundGraceTimer >= 0.1f)
                 {
                     IsInAir = false;
                     GD.Print("¡Pase incompleto! El balón tocó el césped.");
-                    PlayManager.Instance?.EndPlay("Pase incompleto");
+                    PlayManager.Instance?.EndPlay("Pase incompleto", isIncomplete: true);
                     QueueFree();
                 }
                 return;

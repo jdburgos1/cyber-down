@@ -6,7 +6,7 @@
 size = Vector2(26, 26)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_45su5"]
-radius = 24.0
+radius = 28.0
 
 [node name="Defender" type="CharacterBody2D" unique_id=1167549161]
 script = ExtResource("1_r2g7j")
